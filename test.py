@@ -50,13 +50,16 @@ def run_tests_and_analyze(n_tests, accept_blank=False):
         testcase = generator(1)[0]
 
         sol = solve(testcase[0], testcase[1], accept_blank=True)
+        if sol[0] == 0 and not accept_blank:
+            continue
+
         sol_meta = solve_with_aco(testcase[0], testcase[1], accept_blank=True)
 
         if sol[0] != sol_meta[0]:
             mistakes += 1
             print("Solution with ACO is different!")
             print("MSE: ", mse(sol[0], sol_meta[0]))
-
+        i += 1
     # if mistakes > 0:
     print(f"{n_tests - mistakes}/{n_tests} correct")
 
@@ -78,7 +81,7 @@ def run_tests(n_tests, accept_blank=False):
         elif sol[0] == testcase[1]:
             print(f"{i} max k possible")
 
-        if sol[0] != 0:
+        if sol[0] != 0 or accept_blank:
             i += 1
     # if mistakes > 0:
     print(f"{n_tests - mistakes}/{n_tests} correct")

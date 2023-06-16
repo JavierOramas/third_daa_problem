@@ -54,6 +54,20 @@ No obstante, se puede encontrar, por ejemplo la siguiente selección de nodos, q
 
 ![G and G´](report_images/best.jpg)
 
+## Complejidad Temporal
+Este problema utiliza una solución que está acotada por la solución del Problema del Clique que se encuentra en el capítulo 34.5 `NP-Complete problems` del libro `Introduction to Algorithms, third Edition`. Dicha solución tiene una complejidad de $\Omega (k² \binom{|V|}{k})$
+
+Ahora como en la solución encontrada, a lo sumo revisaremos todos los vertices, como en la solución original podemos afirmar que tendrá una complejidad de $\Omega (k² \binom{|V|}{k})$
+# Solución Metaheurística
+Para la modelación con una metaheurística se escogió el método de Colonia de Hormigas, principalmente por la capacidad de explorar el espacio de soluciones en un menor tiempo, además los autores han tenido buenos resultados aplicando este algoritmo en otros casos donde se debe seleccionar un grupo de elementos de un grupo más grande.
+
+Se genera un grafo por cada una de las hormigas que se desea crear.
+luego estas, seleccionan aleatoriamente un nodo por donde empezar y calculan las probabilidades para cada uno de los nodos.
+
+Luego, sobre cada iteración se van modificando los nodos seleccionados para llegar a una solución óptima.
+
+El proceso de evaluación se realizó multiples veces y no hubo diferencias entre los tamaños de la solución NP y la solución encontrada por la metaheurística. Lo que lleva a pensar que es una solución cuanto menos aceptable.
+
 ### NOTA
 Es posible encontrarse con grafos en los que no es posible obtener ningun subgrafo que cumpla los requisitos, en cuyo caso, se retorna 0 y una solución vacía
 
