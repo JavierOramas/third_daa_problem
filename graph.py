@@ -29,4 +29,5 @@ class Edge:
         self.source = source
         self.dest = dest
         self.val = val
+        self.pheromone = 0
 
