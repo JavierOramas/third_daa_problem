@@ -1,5 +1,5 @@
 from graph import Node, Edge
-
+import sys
 greatest_k = 0
 group = []
 
@@ -83,7 +83,7 @@ def brute_force_solution(nodes, k):
     
     return greatest_k, group
 
-def solve(persons: list, k:int):
+def solve(persons: list, k:int, accept_blank=False):
     ids = set([p['id'] for p in persons])
     
     nodes_dict = {p['id']:Node(p['id']) for p in persons}
@@ -97,5 +97,33 @@ def solve(persons: list, k:int):
     
     sol = brute_force_solution(nodes, k)
     
-    # print(f"greatest_k_val: {sol[0]} group: {sol[1]}")
+    # it is valid that some graphs may not have a valid group but we take it out because the generator very often makes a lot of cases with this output
+    # call solve with accept_blank = True to alow those cases
+    if accept_blank or sol[0] != 0:
+        print(f"greatest_k_val: {sol[0]} group: {sol[1]}")
+        
     return sol
+
+def process_data(data_list, k):
+    for data in data_list:
+        id_value = data["id"]
+        edges_list = data["edges"]
+
+        
+if __name__ == '__main__':
+    arg_list = sys.argv[1:-1]  # Exclude the script name and the last argument
+    k = int(sys.argv[-1])  # Last argument is the single integer 'k'
+
+    # Convert the command line arguments to the desired data structure
+    parsed_list = []
+    for arg in arg_list:
+        data_dict = {}
+        parsed_data = arg.split(":")
+        data_dict["id"] = int(parsed_data[0])
+        try:
+            data_dict["edges"] = [int(edge) for edge in parsed_data[1].split(",")] 
+        except:
+            data_dict["edges"] = []
+        parsed_list.append(data_dict)
+
+    solve(k=k, persons=parsed_list, accept_blank=True)

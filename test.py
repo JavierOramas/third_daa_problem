@@ -1,5 +1,5 @@
 import random
-
+import argparse
 import numpy as np
 from main import solve
 
@@ -25,7 +25,7 @@ def generator(n_tests: int):
 
 def check(people, result):
     ids  = set([p['id'] for p in people])
-    id_to_check = ids = set(result)
+    id_to_check = ids - set(result)
     to_check = [p for p in people if p['id'] in id_to_check]
     # print("Checking solution")
     for p in to_check:
@@ -35,19 +35,18 @@ def check(people, result):
         if len(negative_opinions) > 0:
             print(f"Wrong Answer: {p['id']} => {negative_opinions}")
             return False
-        elif len(result):
-            print("OK", result)
+
     return True
 
-def run_tests(n_tests):
+def run_tests(n_tests, accept_blank=False):
     tests = generator(n_tests)
     mistakes = 0
     i = 1 
     while i <= n_tests:
         testcase = generator(1)[0]
-        # print(testcase)
-        sol = solve(testcase[0], testcase[1])
-        # print("solution", sol)
+        
+        sol = solve(testcase[0], testcase[1], accept_blank=accept_blank)
+        
         ans = check(testcase[0], sol[1])
         
         if not ans:
@@ -62,5 +61,8 @@ def run_tests(n_tests):
     print(f"{n_tests - mistakes}/{n_tests} correct") 
 
 if __name__ == "__main__":
-    run_tests(50)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--accept_blank", action="store_true", help="Accept blank values")
+    args = parser.parse_args()
+    run_tests(50, accept_blank=args.accept_blank)
     
